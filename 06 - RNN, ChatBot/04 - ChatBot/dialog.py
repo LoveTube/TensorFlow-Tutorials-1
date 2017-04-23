@@ -194,22 +194,22 @@ def main(_):
     dialog = Dialog()
 
     if FLAGS.data_path and FLAGS.voc_test:
-        print "다음 데이터로 어휘 사전을 테스트합니다.", FLAGS.data_path
+        print("다음 데이터로 어휘 사전을 테스트합니다.", FLAGS.data_path)
         dialog.load_vocab(FLAGS.voc_path)
         dialog.load_examples(FLAGS.data_path)
 
         enc, dec, target = dialog.next_batch(10)
-        print target
+        print(target)
         enc, dec, target = dialog.next_batch(10)
-        print target
+        print(target)
 
     elif FLAGS.data_path and FLAGS.voc_build:
-        print "다음 데이터에서 어휘 사전을 생성합니다.", FLAGS.data_path
+        print("다음 데이터에서 어휘 사전을 생성합니다.", FLAGS.data_path)
         dialog.build_vocab(FLAGS.data_path, FLAGS.voc_path)
 
     elif FLAGS.voc_test:
         dialog.load_vocab(FLAGS.voc_path)
-        print dialog.vocab_dict
+        print(dialog.vocab_dict)
 
 
 if __name__ == "__main__":

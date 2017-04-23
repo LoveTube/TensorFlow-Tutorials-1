@@ -36,12 +36,12 @@ class Inception:
         for i in top_indices:
             name = self.labels[i]
             score = prediction[0][i]
-            print '%s (%.2f%%)' % (name, score * 100)
+            print('%s (%.2f%%)' % (name, score * 100))
 
 
 def main(_):
     if len(sys.argv) < 2:
-        print 'Usage: predict.py image_path'
+        print('Usage: predict.py image_path')
 
     else:
         inception = Inception(FLAGS.output_graph, FLAGS.output_labels)

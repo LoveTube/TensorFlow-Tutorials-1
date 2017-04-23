@@ -105,9 +105,9 @@ for epoch in range(total_epoch):
         _, loss_val_D = sess.run([train_D, loss_D], feed_dict={X: batch_xs, Y: batch_ys, Z: noise})
         _, loss_val_G = sess.run([train_G, loss_G], feed_dict={Y: batch_ys, Z: noise})
 
-    print 'Epoch:', '%04d' % (epoch + 1), \
+    print('Epoch:', '%04d' % (epoch + 1), \
         'D loss: {:.4}'.format(loss_val_D), \
-        'G loss: {:.4}'.format(loss_val_G)
+        'G loss: {:.4}'.format(loss_val_G))
 
     #########
     # 학습이 되어가는 모습을 보기 위해 주기적으로 레이블에 따른 이미지를 생성하여 저장
@@ -130,4 +130,4 @@ for epoch in range(total_epoch):
         plt.close(fig)
 
 
-print '최적화 완료!'
+print('최적화 완료!')

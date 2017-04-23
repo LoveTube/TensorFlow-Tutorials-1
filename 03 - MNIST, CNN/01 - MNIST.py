@@ -58,10 +58,10 @@ for epoch in range(15):
         sess.run(optimizer, feed_dict={X: batch_xs, Y: batch_ys})
         total_cost += sess.run(cost, feed_dict={X: batch_xs, Y: batch_ys})
 
-    print 'Epoch:', '%04d' % (epoch + 1),\
-            'Avg. cost =', '{:.3f}'.format(total_cost / total_batch)
+    print('Epoch:', '%04d' % (epoch + 1),\
+            'Avg. cost =', '{:.3f}'.format(total_cost / total_batch))
 
-print '최적화 완료!'
+print('최적화 완료!')
 
 
 #########
@@ -72,6 +72,6 @@ print '최적화 완료!'
 # 예) [0.1 0 0 0.7 0 0.2 0 0 0 0] -> 4
 check_prediction = tf.equal(tf.argmax(model, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(check_prediction, tf.float32))
-print '정확도:', sess.run(accuracy,
+print('정확도:', sess.run(accuracy,
                             feed_dict={X: mnist.test.images,
-                                       Y: mnist.test.labels})
+                                       Y: mnist.test.labels}))

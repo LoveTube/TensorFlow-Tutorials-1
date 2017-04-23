@@ -5,9 +5,10 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import imp
 
 # matplot 에서 한글을 표시하기 위한 설정
-reload(sys)
+imp.reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
@@ -56,7 +57,7 @@ for i in range(1, len(word_index) - 1):
 def random_batch(data, size):
     random_inputs = []
     random_labels = []
-    random_index = np.random.choice(range(len(data)), size, replace=False)
+    random_index = np.random.choice(list(range(len(data))), size, replace=False)
 
     for i in random_index:
         random_inputs.append(data[i][0])  # target
@@ -129,7 +130,7 @@ with tf.Session() as sess:
                                           labels: batch_labels})
 
         if step % 10 == 0:
-            print "loss at step ", step, ": ", loss_val
+            print("loss at step ", step, ": ", loss_val)
 
     # matplot 으로 출력하여 시각적으로 확인해보기 위해
     # 임베딩 벡터의 결과 값을 계산하여 저장합니다.

@@ -58,7 +58,7 @@ writer = tf.summary.FileWriter('./logs', sess.graph)
 # 다음 주소와 웹브라우저를 이용해 텐서보드에서 확인할 수 있습니다.
 # http://localhost:6006
 
-for step in xrange(100):
+for step in range(100):
     sess.run(train_op, feed_dict={X: x_data, Y: y_data})
 
     # 적절한 시점에 저장할 값들을 수집하고 저장합니다.
@@ -72,9 +72,9 @@ for step in xrange(100):
 ######
 prediction = tf.argmax(model, 1)
 target = tf.argmax(Y, 1)
-print '예측값:', sess.run(prediction, feed_dict={X: x_data})
-print '실제값:', sess.run(target, feed_dict={Y: y_data})
+print('예측값:', sess.run(prediction, feed_dict={X: x_data}))
+print('실제값:', sess.run(target, feed_dict={Y: y_data}))
 
 check_prediction = tf.equal(prediction, target)
 accuracy = tf.reduce_mean(tf.cast(check_prediction, tf.float32))
-print '정확도: %.2f' % sess.run(accuracy * 100, feed_dict={X: x_data, Y: y_data})
+print('정확도: %.2f' % sess.run(accuracy * 100, feed_dict={X: x_data, Y: y_data}))

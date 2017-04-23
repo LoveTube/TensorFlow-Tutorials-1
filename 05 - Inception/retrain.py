@@ -60,9 +60,9 @@ Visualize the summaries with this command:
 tensorboard --logdir /tmp/retrain_logs
 
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import argparse
 from datetime import datetime
@@ -423,7 +423,7 @@ def cache_bottlenecks(sess, image_lists, image_dir, bottleneck_dir,
     """
     how_many_bottlenecks = 0
     ensure_dir_exists(bottleneck_dir)
-    for label_name, label_lists in image_lists.items():
+    for label_name, label_lists in list(image_lists.items()):
         for category in ['training', 'testing', 'validation']:
             category_list = label_lists[category]
             for index, unused_base_name in enumerate(category_list):
@@ -461,7 +461,7 @@ def get_random_cached_bottlenecks(sess, image_lists, how_many, category,
       List of bottleneck arrays, their corresponding ground truths, and the
       relevant filenames.
     """
-    class_count = len(image_lists.keys())
+    class_count = len(list(image_lists.keys()))
     bottlenecks = []
     ground_truths = []
     filenames = []
@@ -528,7 +528,7 @@ def get_random_distorted_bottlenecks(
     Returns:
       List of bottleneck arrays and their corresponding ground truths.
     """
-    class_count = len(image_lists.keys())
+    class_count = len(list(image_lists.keys()))
     bottlenecks = []
     ground_truths = []
     for unused_i in range(how_many):
@@ -772,7 +772,7 @@ def main(_):
     # Look at the folder structure, and create lists of all the images.
     image_lists = create_image_lists(FLAGS.image_dir, FLAGS.testing_percentage,
                                      FLAGS.validation_percentage)
-    class_count = len(image_lists.keys())
+    class_count = len(list(image_lists.keys()))
     if class_count == 0:
         print('No valid folders of images found at ' + FLAGS.image_dir)
         return -1
@@ -800,7 +800,7 @@ def main(_):
 
     # Add the new layer that we'll be training.
     (train_step, cross_entropy, bottleneck_input, ground_truth_input,
-     final_tensor) = add_final_training_ops(len(image_lists.keys()),
+     final_tensor) = add_final_training_ops(len(list(image_lists.keys())),
                                             FLAGS.final_tensor_name,
                                             bottleneck_tensor)
 
@@ -884,7 +884,7 @@ def main(_):
         print('=== MISCLASSIFIED TEST IMAGES ===')
         for i, test_filename in enumerate(test_filenames):
             if predictions[i] != test_ground_truth[i].argmax():
-                print('%70s  %s' % (test_filename, image_lists.keys()[predictions[i]]))
+                print('%70s  %s' % (test_filename, list(image_lists.keys())[predictions[i]]))
 
     # Write out the trained graph and labels with the weights stored as constants.
     output_graph_def = graph_util.convert_variables_to_constants(
@@ -892,7 +892,7 @@ def main(_):
     with gfile.FastGFile(FLAGS.output_graph, 'wb') as f:
         f.write(output_graph_def.SerializeToString())
     with gfile.FastGFile(FLAGS.output_labels, 'w') as f:
-        f.write('\n'.join(image_lists.keys()) + '\n')
+        f.write('\n'.join(list(image_lists.keys())) + '\n')
 
 
 if __name__ == '__main__':
