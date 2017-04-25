@@ -71,18 +71,18 @@ dec_input = tf.transpose(dec_input, [1, 0, 2])
 
 # 인코더 셀을 구성한다.
 with tf.variable_scope('encode'):
-    enc_cell = tf.nn.rnn_cell.BasicRNNCell(n_hidden)
-    enc_cell = tf.nn.rnn_cell.DropoutWrapper(enc_cell, output_keep_prob=0.5)
-    enc_cell = tf.nn.rnn_cell.MultiRNNCell([enc_cell] * n_layers)
+    enc_cell = tf.contrib.rnn.BasicRNNCell(n_hidden)
+    enc_cell = tf.contrib.rnn.DropoutWrapper(enc_cell, output_keep_prob=0.5)
+    enc_cell = tf.contrib.rnn.MultiRNNCell([enc_cell] * n_layers)
 
     outputs, enc_states = tf.nn.dynamic_rnn(enc_cell, enc_input,
                                             dtype=tf.float32)
 
 # 디코더 셀을 구성한다.
 with tf.variable_scope('decode'):
-    dec_cell = tf.nn.rnn_cell.BasicRNNCell(n_hidden)
-    dec_cell = tf.nn.rnn_cell.DropoutWrapper(dec_cell, output_keep_prob=0.5)
-    dec_cell = tf.nn.rnn_cell.MultiRNNCell([dec_cell] * n_layers)
+    dec_cell = tf.contrib.rnn.BasicRNNCell(n_hidden)
+    dec_cell = tf.contrib.rnn.DropoutWrapper(dec_cell, output_keep_prob=0.5)
+    dec_cell = tf.contrib.rnn.MultiRNNCell([dec_cell] * n_layers)
 
     # Seq2Seq 모델은 인코더 셀의 최종 상태값을
     # 디코더 셀의 초기 상태값으로 넣어주는 것이 핵심.
@@ -103,7 +103,7 @@ logits = tf.matmul(outputs_trans, W) + b
 logits = tf.reshape(logits, [-1, time_steps, n_classes])
 
 
-cost = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits, targets))
+cost = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = logits,labels =  targets))
 train_op = tf.train.AdamOptimizer(learning_rate=0.01).minimize(cost)
 
 

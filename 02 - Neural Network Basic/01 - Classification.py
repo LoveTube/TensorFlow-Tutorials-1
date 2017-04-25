@@ -4,6 +4,8 @@
 import tensorflow as tf
 import numpy as np
 
+import pdb
+
 # [털, 날개]
 x_data = np.array(
     [[0, 0], [1, 0], [1, 1], [0, 0], [0, 0], [0, 1]])
@@ -71,7 +73,7 @@ init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
-for step in range(100):
+for step in range(1000):
     sess.run(train_op, feed_dict={X: x_data, Y: y_data})
 
     if (step + 1) % 10 == 0:
@@ -87,6 +89,7 @@ for step in range(100):
 #    [[0.2 0.7 0.1] [0.9 0.1 0.]] -> [2 1]
 prediction = tf.argmax(model, 1)
 target = tf.argmax(Y, 1)
+
 print('예측값:', sess.run(prediction, feed_dict={X: x_data}))
 print('실제값:', sess.run(target, feed_dict={Y: y_data}))
 

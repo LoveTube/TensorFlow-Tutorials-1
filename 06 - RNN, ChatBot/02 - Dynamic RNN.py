@@ -61,10 +61,10 @@ X_t = tf.transpose(X, [1, 0, 2])
 
 # RNN 셀을 생성합니다.
 # 다중 레이어와 과적합 방지를 위한 Dropout 기법을 사용합니다.
-cell = tf.nn.rnn_cell.BasicRNNCell(n_hidden)
-cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=0.5)
+cell = tf.contrib.rnn.BasicRNNCell(n_hidden)
+cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=0.5)
 # 다중 레이어 구성을 다음과 같이 아주 간단하게 만들 수 있습니다.
-cell = tf.nn.rnn_cell.MultiRNNCell([cell] * n_layers)
+cell = tf.contrib.rnn.MultiRNNCell([cell] * n_layers)
 
 # tf.nn.dynamic_rnn 함수를 이용해 순환 신경망을 만듭니다.
 outputs, states = tf.nn.dynamic_rnn(cell, X_t, dtype=tf.float32, time_major=True)
@@ -78,7 +78,7 @@ labels = tf.reshape(Y, [-1])
 
 
 cost = tf.reduce_mean(
-            tf.nn.sparse_softmax_cross_entropy_with_logits(logits, labels))
+            tf.nn.sparse_softmax_cross_entropy_with_logits(logits = logits, labels = labels))
 
 train_op = tf.train.RMSPropOptimizer(learning_rate=0.01).minimize(cost)
 

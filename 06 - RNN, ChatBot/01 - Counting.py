@@ -72,7 +72,7 @@ X_t = tf.transpose(X, [1, 0, 2])
 #    -> Tensor[n_steps*batch_size, n_input]
 X_t = tf.reshape(X_t, [-1, n_input])
 #    -> [n_steps, Tensor[batch_size, n_input]]
-X_t = tf.split(0, n_steps, X_t)
+X_t = tf.split(X_t, n_steps, 0)
 
 # RNN 셀을 생성합니다.
 # 다음 함수들을 사용하면 다른 구조의 셀로 간단하게 변경할 수 있습니다

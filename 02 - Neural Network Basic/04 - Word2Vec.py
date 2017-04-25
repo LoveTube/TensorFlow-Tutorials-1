@@ -9,7 +9,7 @@ import imp
 
 # matplot 에서 한글을 표시하기 위한 설정
 imp.reload(sys)
-sys.setdefaultencoding('utf-8')
+#sys.setdefaultencoding('utf-8')
 
 
 # 단어 벡터를 분석해볼 임의의 문장들

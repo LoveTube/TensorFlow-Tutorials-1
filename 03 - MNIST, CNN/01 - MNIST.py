@@ -34,7 +34,7 @@ L2 = tf.nn.relu(tf.matmul(L1, W2))
 # 최종 모델의 출력값은 W3 변수를 곱해 10개의 분류를 가지게 됩니다.
 model = tf.matmul(L2, W3)
 
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(model, Y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = model, labels = Y))
 optimizer = tf.train.AdamOptimizer(0.001).minimize(cost)
 
 
@@ -48,7 +48,7 @@ sess.run(init)
 batch_size = 100
 total_batch = int(mnist.train.num_examples/batch_size)
 
-for epoch in range(15):
+for epoch in range(12):
     total_cost = 0
 
     for i in range(total_batch):
@@ -70,6 +70,15 @@ print('최적화 완료!')
 # model 로 예측한 값과 실제 레이블인 Y의 값을 비교합니다.
 # tf.argmax 함수를 이용해 예측한 값에서 가장 큰 값을 예측한 레이블이라고 평가합니다.
 # 예) [0.1 0 0 0.7 0 0.2 0 0 0 0] -> 4
+
+
+prediction = tf.argmax(model, 1)
+target = tf.argmax(Y, 1)
+
+
+print('예측값:', sess.run(prediction, feed_dict={X:mnist.test.images}))
+print('실제값:', sess.run(target, feed_dict={Y:mnist.test.labels}))
+
 check_prediction = tf.equal(tf.argmax(model, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(check_prediction, tf.float32))
 print('정확도:', sess.run(accuracy,

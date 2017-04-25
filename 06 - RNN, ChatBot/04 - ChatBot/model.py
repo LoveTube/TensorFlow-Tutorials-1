@@ -49,13 +49,13 @@ class Seq2Seq:
         self.outputs = tf.argmax(self.logits, 2)
 
     def build_cells(self, output_keep_prob=0.5):
-        enc_cell = tf.nn.rnn_cell.BasicRNNCell(self.n_hidden)
-        enc_cell = tf.nn.rnn_cell.DropoutWrapper(enc_cell, output_keep_prob=output_keep_prob)
-        enc_cell = tf.nn.rnn_cell.MultiRNNCell([enc_cell] * self.n_layers)
+        enc_cell = tf.contrib.rnn.BasicRNNCell(self.n_hidden)
+        enc_cell = tf.contrib.rnn.DropoutWrapper(enc_cell, output_keep_prob=output_keep_prob)
+        enc_cell = tf.contrib.rnn.MultiRNNCell([enc_cell] * self.n_layers)
 
-        dec_cell = tf.nn.rnn_cell.BasicRNNCell(self.n_hidden)
-        dec_cell = tf.nn.rnn_cell.DropoutWrapper(dec_cell, output_keep_prob=output_keep_prob)
-        dec_cell = tf.nn.rnn_cell.MultiRNNCell([dec_cell] * self.n_layers)
+        dec_cell = tf.contrib.rnn.BasicRNNCell(self.n_hidden)
+        dec_cell = tf.contrib.rnn.DropoutWrapper(dec_cell, output_keep_prob=output_keep_prob)
+        dec_cell = tf.contrib.rnn.MultiRNNCell([dec_cell] * self.n_layers)
 
         return enc_cell, dec_cell
 
@@ -66,7 +66,7 @@ class Seq2Seq:
         logits = tf.matmul(outputs, self.weights) + self.bias
         logits = tf.reshape(logits, [-1, time_steps, self.vocab_size])
 
-        cost = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits, targets))
+        cost = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = logits, labels =  targets))
         train_op = tf.train.AdamOptimizer(learning_rate=self.learning_late).minimize(cost, global_step=self.global_step)
 
         tf.summary.scalar('cost', cost)

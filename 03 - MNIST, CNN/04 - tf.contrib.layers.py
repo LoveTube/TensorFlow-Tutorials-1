@@ -40,7 +40,7 @@ L5 = tf.contrib.layers.fully_connected(L5, 256,
                                        normalizer_fn=tf.contrib.layers.batch_norm)
 model = tf.contrib.layers.fully_connected(L5, n_output)
 
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(model, Y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = model,labels =  Y))
 optimizer = tf.train.AdamOptimizer(0.001).minimize(cost)
 
 
