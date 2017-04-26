@@ -77,17 +77,17 @@ X_t = tf.split(X_t, n_steps, 0)
 # RNN 셀을 생성합니다.
 # 다음 함수들을 사용하면 다른 구조의 셀로 간단하게 변경할 수 있습니다
 # BasicRNNCell,BasicLSTMCell,GRUCell
-cell = tf.nn.rnn_cell.BasicRNNCell(n_hidden)
+cell = tf.contrib.rnn.core_rnn_cell.BasicRNNCell(n_hidden)
 
 # tf.nn.rnn 함수를 이용해 순환 신경망을 만듭니다.
 # 역시 겁나 매직!!
-outputs, states = tf.nn.rnn(cell, X_t, dtype=tf.float32)
+outputs, states = tf.contrib.rnn.static_rnn(cell, X_t, dtype=tf.float32)
 
 # 손실 함수 작성을 위해 출력값을 Y 와 같은 형태의 차원으로 재구성합니다
 logits = tf.matmul(outputs[-1], W) + b
 
 cost = tf.reduce_mean(
-            tf.nn.softmax_cross_entropy_with_logits(logits, Y))
+            tf.nn.softmax_cross_entropy_with_logits(logits = logits,labels = Y))
 
 train_op = tf.train.RMSPropOptimizer(learning_rate=0.01).minimize(cost)
 
