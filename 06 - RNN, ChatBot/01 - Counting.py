@@ -6,18 +6,6 @@ import tensorflow as tf
 import numpy as np
 
 
-num_arr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-# one-hot 인코딩을 사용하기 위해 연관 배열을 만듭니다.
-# {'1': 0, '2': 1, '3': 2, ..., '9': 9, '0', 10}
-num_dic = {n: i for i, n in enumerate(num_arr)}
-dic_len = len(num_dic)
-
-# 다음 배열은 입력값과 출력값으로 다음처럼 사용할 것 입니다.
-# 123 -> X, 4 -> Y
-# 234 -> X, 5 -> Y
-seq_data = ['1234', '2345', '3456', '4567', '5678', '6789', '7890']
-
-
 # 위의 데이터에서 X,Y 값을 뽑아 one-hot 인코딩을 한 뒤 배치데이터로 만드는 함수
 def one_hot_seq(seq_data):
     x_batch = []
@@ -39,6 +27,21 @@ def one_hot_seq(seq_data):
         y_batch.append(np.eye(dic_len)[y_data])
 
     return x_batch, y_batch
+
+
+
+num_arr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+# one-hot 인코딩을 사용하기 위해 연관 배열을 만듭니다.
+# {'1': 0, '2': 1, '3': 2, ..., '9': 9, '0', 10}
+num_dic = {n: i for i, n in enumerate(num_arr)}
+dic_len = len(num_dic)
+
+# 다음 배열은 입력값과 출력값으로 다음처럼 사용할 것 입니다.
+# 123 -> X, 4 -> Y
+# 234 -> X, 5 -> Y
+seq_data = ['1234', '2345', '3456', '4567', '5678', '6789', '7890']
+
+
 
 
 #########
